@@ -1,0 +1,7 @@
+data_set <- read.table("household_power_consumption.txt", header = TRUE, sep = ";", na.strings = "?", stringsAsFactors = FALSE)
+plot_data <- subset(data_set, Date == "1/2/2007"|Date == "2/2/2007")
+plot_data <- transform(plot_data,date_time = paste(Date,Time, sep = " "))
+plot_data <- transform(plot_data,Date = strptime(Date,"%d/%m/%Y"), Time = strptime(Time, "%H:%M:%S"), date_time = strptime(date_time, "%d/%m/%Y %H:%M:%S"))
+with(plot_data,plot(date_time,Global_active_power, type = "l", xlab = "", ylab = "Global Active Power(kilowatts)"))
+dev.copy(png,file = "plot2.png",height = 480, width = 480)
+dev.off()
